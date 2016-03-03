@@ -1,17 +1,31 @@
-#include <fstream>
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+
 #include "rang.hpp"
 
-int main()
+#include <fstream>
+#include <string>
+
+std::string RCB(std::string input)
 {
-	std::cout << rang::fg::blue << "\nShould be blue";
 	std::ofstream out("out.txt");
 	std::streambuf *coutbuf = std::cout.rdbuf();
 	std::cout.rdbuf(out.rdbuf());
 
-	std::string word = "not blue";
-	std::cout << "START " << rang::fg::blue << word << " END";
+	std::cout << rang::fg::blue << input << rang::style::reset;
 
 	std::cout.rdbuf(coutbuf);
-	std::cout << "\nShould again be blue" << rang::style::reset << std::endl;
-	return 0;
+	out.close();
+	
+	std::ifstream in("out.txt");
+	std::string output;
+	std::getline(in,output);
+	return output;
+
 }
+
+TEST_CASE("Redirected cout buffer", "RCB")
+{
+	REQUIRE(RCB("HelloWorld") == "HelloWorld");
+}
+
