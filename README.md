@@ -13,3 +13,4 @@ colors for your terminal
 - [ ] write better tests
 - [ ] add travis CI support
 - [ ] coverage?
+- [ ] support Windows
