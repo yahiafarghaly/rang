@@ -11,6 +11,6 @@ colors for your terminal
 
 ###TODO
 - [ ] migrate to Cmake
-- [ ] add travis CI support
+- [ ] Fix travis CI support
 - [ ] coverage?
 - [ ] support Windows
