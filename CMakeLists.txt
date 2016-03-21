@@ -11,10 +11,26 @@ else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-SET(GCC_COVERAGE_COMPILE_FLAGS "-g -O0 -fprofile-arcs -ftest-coverage")
-SET(GCC_COVERAGE_LINK_FLAGS    "-lgcov")
-SET( CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}" )
-SET( CMAKE_EXE_LINKER_FLAGS  "${CMAKE_EXE_LINKER_FLAGS} ${GCC_COVERAGE_LINK_FLAGS}" )
+
+option(COVERALLS "Turn on coveralls support" OFF)
+
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
+	${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake)
+
+if (COVERALLS)
+	include(Coveralls)
+	coveralls_turn_on_coverage()
+endif()
+
+
+if (COVERALLS)
+	set(COVERAGE_SRCS ${PROJECT_SOURCE_DIR}/include/rang.hpp)
+	
+	coveralls_setup(
+        "${COVERAGE_SRCS}"
+        ON
+        "${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake")
+endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
