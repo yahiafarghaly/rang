@@ -10,7 +10,6 @@ colors for your terminal
 4. Profit!!
 
 ###TODO
-- [ ] migrate to Cmake
 - [ ] Fix travis CI support
 - [ ] coverage?
 - [ ] support Windows
