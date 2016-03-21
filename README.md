@@ -10,6 +10,5 @@ colors for your terminal
 4. Profit!!
 
 ###TODO
-- [ ] Fix travis CI support
 - [ ] coverage?
 - [ ] support Windows
