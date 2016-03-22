@@ -12,8 +12,6 @@ else()
 endif()
 
 
-option(COVERALLS "Turn on coveralls support" OFF)
-
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH}
 	${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake)
 
@@ -24,18 +22,19 @@ endif()
 
 
 if (COVERALLS)
-	set(COVERAGE_SRCS ${PROJECT_SOURCE_DIR}/include/rang.hpp)
-	
+	set(COVERAGE_SRCS ${PROJECT_SOURCE_DIR}/include/rang.hpp ${PROJECT_SOURCE_DIR}/test/test.cpp)
 	coveralls_setup(
         "${COVERAGE_SRCS}"
-        ON
-        "${PROJECT_SOURCE_DIR}/coveralls-cmake/cmake")
+        ON)
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+enable_testing()
 
 include_directories(include)
 set(CATCH_HEADER_PATH ${PROJECT_SOURCE_DIR}/test/catch.hpp)
 
 add_executable(vTest ${PROJECT_SOURCE_DIR}/test/visualTest.cpp)
 add_executable(runTest ${PROJECT_SOURCE_DIR}/test/test.cpp ${CATCH_HEADER_PATH})
+
+add_test(RTEST ${CMAKE_BINARY_DIR}/bin/runTest)

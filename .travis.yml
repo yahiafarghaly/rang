@@ -63,10 +63,6 @@ install:
 
 before_script:
   - export CXX=$COMPILER
-
-  - export COVERALLS_SERVICE_NAME=travis-ci
-  - export COVERALLS_REPO_TOKEN=abc12345
-
   - git submodule update --init
   - mkdir build
   - cd build
@@ -74,6 +70,8 @@ before_script:
 
 script:
   - cmake --build .
+  - ./bin/vTest
+  - ./bin/runTest
 
 after_script:
   - cmake --build . --target coveralls
