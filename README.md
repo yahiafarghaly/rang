@@ -13,5 +13,5 @@ colors for your terminal
 4. Profit!!
 
 ###TODO
-- [ ] coverage?
+- [ ] get 100% coverage
 - [ ] support Windows
