@@ -8,7 +8,7 @@ colors for your terminal
 
 ###How to use it
 1. You just need *`rang.hpp`* from include directory, use it as `#include "rang.hpp"`
-2. maybe glance inside ***`test`*** directory to see some usage
+2. Check out the [wiki](https://github.com/agauniyal/rang/wiki) ~~& maybe glance inside ***`test`*** directory to see some usage~~
 3. ???
 4. Profit!!
 
