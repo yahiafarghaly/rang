@@ -67,57 +67,57 @@ namespace rang {
 		cyan    = 106,
 		gray    = 107
 	};
-}
 
+	inline bool supportsColor()
+	{
+		const std::string Terms[] = { "ansi",  "color",   "console", "cygwin",
+			                          "gnome", "konsole", "kterm",   "linux",
+			                          "msys",  "putty",   "rxvt",    "screen",
+			                          "vt100", "xterm" };
 
-inline bool supportsColor()
-{
-	const std::string Terms[] = { "ansi",  "color",   "console", "cygwin",
-		                          "gnome", "konsole", "kterm",   "linux",
-		                          "msys",  "putty",   "rxvt",    "screen",
-		                          "vt100", "xterm" };
+		static const bool result = std::any_of(
+		    std::begin(Terms), std::end(Terms), [&](std::string term) {
 
-	static const bool result =
-	    std::any_of(std::begin(Terms), std::end(Terms), [&](std::string term) {
+			    if(const char *env_p = std::getenv("TERM")) {
+				    return std::string(env_p).find(term) != std::string::npos;
+			    }
+			    else
+				    return false;
+			});
 
-		    if(const char *env_p = std::getenv("TERM")) {
-			    return std::string(env_p).find(term) != std::string::npos;
-		    }
-		    else
-			    return false;
-		});
-
-	return result;
-}
-
-inline bool isTerminal(const std::streambuf *osbuf)
-{
-	if(osbuf == RANG_coutbuf) {
-		return isatty(fileno(stdout));
+		return result;
 	}
-	if(osbuf == RANG_cerrbuf || osbuf == RANG_clogbuf) {
-		return isatty(fileno(stderr));
+
+	inline bool isTerminal(const std::streambuf *osbuf)
+	{
+		if(osbuf == RANG_coutbuf) {
+			return isatty(fileno(stdout));
+		}
+		if(osbuf == RANG_cerrbuf || osbuf == RANG_clogbuf) {
+			return isatty(fileno(stderr));
+		}
+		return false;
 	}
-	return false;
-}
 
 
-template <typename T>
-using enable = typename std::enable_if
-			<
-				std::is_same<T, rang::style>::value ||
-				std::is_same<T, rang::fg>::value ||
-				std::is_same<T, rang::bg>::value,
-				std::ostream &
-			>::type;
+	template <typename T>
+	using enable =
+		typename std::enable_if
+		<
+			std::is_same<T, rang::style>::value ||
+			std::is_same<T, rang::fg>::value ||
+			std::is_same<T, rang::bg>::value,
+			std::ostream &
+		>::type;
 
-template <typename T>
-inline enable<T> operator<<(std::ostream &os, T const value)
-{
-	std::streambuf const *osbuf = os.rdbuf();
-	return ((supportsColor()) && (isTerminal(osbuf)))
-	           ? os << "\033[" << static_cast<int>(value) << "m"
-	           : os;
+	template <typename T>
+	inline enable<T> operator<<(std::ostream &os, T const value)
+	{
+		std::streambuf const *osbuf = os.rdbuf();
+		return ((supportsColor()) && (isTerminal(osbuf)))
+		           ? os << "\033[" << static_cast<int>(value) << "m"
+		           : os;
+	}
 }
 
 #endif /* ifndef RANG_H */
