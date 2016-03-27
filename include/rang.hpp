@@ -27,6 +27,7 @@ namespace rang {
 		conceal   = 7,
 		crossed   = 8
 	};
+
 	enum class fg {
 		black   = 30,
 		red     = 31,
@@ -37,6 +38,7 @@ namespace rang {
 		cyan    = 36,
 		gray    = 37
 	};
+
 	enum class bg {
 		black   = 40,
 		red     = 41,
@@ -47,6 +49,7 @@ namespace rang {
 		cyan    = 46,
 		gray    = 47
 	};
+
 	enum class fgB {
 		black   = 90,
 		red     = 91,
@@ -57,6 +60,7 @@ namespace rang {
 		cyan    = 96,
 		gray    = 97
 	};
+
 	enum class bgB {
 		black   = 100,
 		red     = 101,
@@ -75,14 +79,15 @@ namespace rang {
 			                          "msys",  "putty",   "rxvt",    "screen",
 			                          "vt100", "xterm" };
 
+		const char *env_p = std::getenv("TERM");
+		if(env_p == nullptr) {
+			return false;
+		}
+
+		std::string env_string(env_p);
 		static const bool result = std::any_of(
 		    std::begin(Terms), std::end(Terms), [&](std::string term) {
-
-			    if(const char *env_p = std::getenv("TERM")) {
-				    return std::string(env_p).find(term) != std::string::npos;
-			    }
-			    else
-				    return false;
+			    return env_string.find(term) != std::string::npos;
 			});
 
 		return result;
@@ -101,8 +106,7 @@ namespace rang {
 
 
 	template <typename T>
-	using enable =
-		typename std::enable_if
+	using enable = typename std::enable_if
 		<
 			std::is_same<T, rang::style>::value ||
 			std::is_same<T, rang::fg>::value ||
