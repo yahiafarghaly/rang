@@ -1,14 +1,27 @@
-#ifndef RANG_H
-#define RANG_H
+#ifndef RANG_DOT_HPP
+#define RANG_DOT_HPP
+
+#if defined(__unix__) || defined(__unix) || defined(__linux__)
+	#define OS_LINUX
+#elif defined(WIN32) || defined(_WIN32) || defined(_WIN64)
+	#define OS_WIN
+#elif defined(__APPLE__) || defined(__MACH__)
+	#define OS_MAC
+#else
+	#error Unknown Platform
+#endif
+
+#if defined(OS_LINUX) || defined(OS_MAC)
+#include <unistd.h>
+#elif defined(OS_WIN)
+#include <io.h>
+#endif
 
 #include <iostream>
 #include <cstdlib>
 #include <iterator>
 #include <algorithm>
 #include <type_traits>
-extern "C" {
-#include <unistd.h>
-}
 
 std::streambuf const *RANG_coutbuf = std::cout.rdbuf();
 std::streambuf const *RANG_cerrbuf = std::cerr.rdbuf();
@@ -74,10 +87,12 @@ namespace rang {
 
 	inline bool supportsColor()
 	{
-		const std::string Terms[] = { "ansi",  "color",   "console", "cygwin",
-			                          "gnome", "konsole", "kterm",   "linux",
-			                          "msys",  "putty",   "rxvt",    "screen",
-			                          "vt100", "xterm" };
+
+	#if defined(OS_LINUX) || defined(OS_MAC)
+		const std::string Terms[] = {"ansi",  "color",   "console", "cygwin",
+		                             "gnome", "konsole", "kterm",   "linux",
+		                             "msys",  "putty",   "rxvt",    "screen",
+		                             "vt100", "xterm"};
 
 		const char *env_p = std::getenv("TERM");
 		if(env_p == nullptr) {
@@ -90,16 +105,29 @@ namespace rang {
 			    return env_string.find(term) != std::string::npos;
 			});
 
+	#elif defined(OS_WIN)
+		static const bool result = true;
+	#endif
+
 		return result;
 	}
 
 	inline bool isTerminal(const std::streambuf *osbuf)
 	{
 		if(osbuf == RANG_coutbuf) {
-			return isatty(fileno(stdout));
+	#if defined(OS_LINUX) || defined(OS_MAC)
+			return isatty(fileno(stdout)) ? true : false;
+	#elif defined(OS_WIN)
+			return _isatty(_fileno(stdout)) ? true : false;
+	#endif
 		}
+
 		if(osbuf == RANG_cerrbuf || osbuf == RANG_clogbuf) {
-			return isatty(fileno(stderr));
+	#if defined(OS_LINUX) || defined(OS_MAC)
+			return isatty(fileno(stderr)) ? true : false;
+	#elif defined(OS_WIN)
+			return _isatty(_fileno(stderr)) ? true : false;
+	#endif
 		}
 		return false;
 	}
@@ -110,7 +138,9 @@ namespace rang {
 		<
 			std::is_same<T, rang::style>::value ||
 			std::is_same<T, rang::fg>::value ||
-			std::is_same<T, rang::bg>::value,
+			std::is_same<T, rang::bg>::value ||
+			std::is_same<T, rang::fgB>::value ||
+			std::is_same<T, rang::bgB>::value,
 			std::ostream &
 		>::type;
 
@@ -124,4 +154,8 @@ namespace rang {
 	}
 }
 
-#endif /* ifndef RANG_H */
+#undef OS_LINUX
+#undef OS_WIN
+#undef OS_MAC
+
+#endif /* ifndef RANG_DOT_HPP */

@@ -14,4 +14,4 @@ colors for your terminal
 
 ###TODO
 - [ ] get 100% coverage
-- [ ] support Windows
+- [ ] support Windows versions < 10
