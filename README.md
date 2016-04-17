@@ -1,4 +1,4 @@
-# rang
+# rang (रंग)
 [![Build Status](https://travis-ci.org/agauniyal/rang.svg?branch=master)](https://travis-ci.org/agauniyal/rang)
 [![Coverage Status](https://coveralls.io/repos/github/agauniyal/rang/badge.svg?branch=master)](https://coveralls.io/github/agauniyal/rang?branch=master)
 
