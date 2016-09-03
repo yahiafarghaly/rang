@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Rang by agauniyal</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Rang</h1>
+        <p>A simple, modern &amp; header only c++11 library for colors in your terminal</p>
+        <p class="view"><a href="https://github.com/agauniyal/rang">View the Project on GitHub <small>agauniyal/rang</small></a></p>
+        <ul>
+          <li><a href="https://github.com/agauniyal/rang/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/agauniyal/rang/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/agauniyal/rang">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="rang--" class="anchor" href="#rang--" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>rang <a href="https://travis-ci.org/agauniyal/rang"><img src="https://travis-ci.org/agauniyal/rang.svg?branch=master" alt="Build Status"></a> <a href="https://coveralls.io/github/agauniyal/rang?branch=master"><img src="https://coveralls.io/repos/github/agauniyal/rang/badge.svg?branch=master" alt="Coverage Status"></a>
+</h1>
+
+<h5>
+<a id="colors-for-your-terminal" class="anchor" href="#colors-for-your-terminal" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Colors for your Terminal.</h5>
+
+<p><img src="https://cloud.githubusercontent.com/assets/7630575/13501282/0bd00074-e18c-11e5-9848-5bd1f20566d9.gif" alt="rang-demo"></p>
+
+<hr>
+
+<h2>
+<a id="how-to-use-it" class="anchor" href="#how-to-use-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to use it</h2>
+
+<h4>
+<a id="no-build-systempackage-manager" class="anchor" href="#no-build-systempackage-manager" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>No build system/package manager</h4>
+
+<ol>
+<li>You just need <a href="https://raw.githubusercontent.com/agauniyal/rang/master/include/rang.hpp">rang.hpp</a> from include directory, use it as <code>#include "rang.hpp"</code>
+</li>
+<li>Check out the <a href="https://github.com/agauniyal/rang/wiki">wiki</a> <del>&amp; maybe glance inside <strong><em><code>test</code></em></strong> directory to see some usage</del>
+</li>
+<li>???</li>
+<li>Profit!!</li>
+</ol>
+
+<h4>
+<a id="using-meson-build-system" class="anchor" href="#using-meson-build-system" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using Meson build system</h4>
+
+<ul>
+<li>Make a <code>rang.wrap</code> file inside your <code>subprojects/</code> directory with following content - </li>
+</ul>
+
+<pre><code>[rang-git]
+directory=rang
+url=https://github.com/agauniyal/rang.git
+revision=head
+</code></pre>
+
+<ul>
+<li>Place this code inside your primary <code>meson.build</code> -</li>
+</ul>
+
+<pre><code>rang_dep = dependency('rang', fallback : ['rang', 'rang_dep'])
+</code></pre>
+
+<ul>
+<li>Make sure to include <code>rang_dep</code> as dependency wherever you need it.</li>
+</ul>
+
+<hr>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
+
+<ul>
+<li>support Windows versions &lt; 10</li>
+</ul>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/agauniyal">agauniyal</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
