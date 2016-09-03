@@ -27,3 +27,22 @@ TEST_CASE("Rang printing to non-terminals", "[file]")
 		REQUIRE(s == output);
 	}
 }
+
+TEST_CASE("Rang printing to standard output", "[terminal]")
+{
+	std::string s = "Rang works with ";
+
+	SECTION("output is to terminal")
+	{
+
+		std::cout << rang::fg::green << s << "std::cout" << rang::style::reset
+		          << std::endl;
+
+		std::clog << rang::fg::blue << s << "std::clog" << rang::style::reset
+		          << std::endl;
+
+		std::cerr << rang::fg::red << s << "std::cerr" << rang::style::reset
+		          << std::endl;
+		REQUIRE(1 == 1);
+	}
+}
