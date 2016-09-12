@@ -1,4 +1,4 @@
-project('rang', 'cpp', version : '1.0',
+project('rang', 'cpp', version : '1.1',
         default_options : ['cpp_std=c++11'])
 
 inc = include_directories('include')

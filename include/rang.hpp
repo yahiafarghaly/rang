@@ -23,11 +23,13 @@
 #include <iterator>
 #include <type_traits>
 
-std::streambuf const *RANG_coutbuf = std::cout.rdbuf();
-std::streambuf const *RANG_cerrbuf = std::cerr.rdbuf();
-std::streambuf const *RANG_clogbuf = std::clog.rdbuf();
-
 namespace rang {
+
+namespace {
+	std::streambuf const *RANG_coutbuf = std::cout.rdbuf();
+	std::streambuf const *RANG_cerrbuf = std::cerr.rdbuf();
+	std::streambuf const *RANG_clogbuf = std::clog.rdbuf();
+}
 
 enum class style {
 	reset     = 0,
