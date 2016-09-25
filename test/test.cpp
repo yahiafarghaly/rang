@@ -11,6 +11,8 @@ TEST_CASE("Rang printing to non-terminals", "[file]")
 
 	SECTION("output is to a file")
 	{
+		rang::init();
+
 		std::ofstream out("out.txt");
 		std::streambuf *coutbuf = std::cout.rdbuf();
 		std::cout.rdbuf(out.rdbuf());
