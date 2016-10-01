@@ -171,7 +171,7 @@ template <typename T>
 inline enableStd<T> operator<<(std::ostream &os, T const value)
 {
 	std::streambuf const *osbuf = os.rdbuf();
-	return (os.iword(getIword()) || (supportsColor()) && (isTerminal(osbuf)))
+	return (os.iword(getIword()) || ((supportsColor()) && (isTerminal(osbuf))))
 	  ? os << "\033[" << static_cast<int>(value) << "m"
 	  : os;
 }
