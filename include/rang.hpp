@@ -96,8 +96,8 @@ enum class bgB {
 };
 
 enum class control {
-	autoColor = 108,
-	forceColor = 109
+	autoColor = 0,
+	forceColor = 1
 };
 
 inline bool supportsColor()
