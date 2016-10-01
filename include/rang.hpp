@@ -159,6 +159,7 @@ using enableStd = typename std::enable_if
 		std::is_same<T, rang::bgB>::value,
 		std::ostream&
 	>::type;
+
 template <typename T>
 using enableControl = typename std::enable_if
 	<
