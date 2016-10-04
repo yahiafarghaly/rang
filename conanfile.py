@@ -13,7 +13,8 @@ class RangConan(ConanFile):
 
     def source(self):
         self.run("git clone https://github.com/agauniyal/rang.git")
-        self.run("cd rang")
+        self.run("cd rang && git checkout v1.0")
 
     def package(self):
-        self.copy("*.hpp", "include", "rang/include")
+        self.copy("*.hpp", dst="include", src="rang/include")
+        
