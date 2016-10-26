@@ -111,13 +111,6 @@ namespace rang {
 			return i;
 		}
 
-		void init()
-		{
-			RANG_coutbuf();
-			RANG_cerrbuf();
-			RANG_clogbuf();
-		}
-
 		inline bool supportsColor()
 		{
 
@@ -263,6 +256,13 @@ namespace rang {
 			std::ostream&
 			>::type;
 
+	}
+
+	void init()
+	{
+		rang_implementation::RANG_coutbuf();
+		rang_implementation::RANG_cerrbuf();
+		rang_implementation::RANG_clogbuf();
 	}
 
 	template <typename T>
