@@ -5,6 +5,10 @@
 #include <fstream>
 #include <string>
 
+/*
+The rang::control::forceColor is used to write to terminal here in order to work with appveyor
+*/
+
 TEST_CASE("Rang printing to non-terminals", "[file]")
 {
 	std::string s = "Hello World";
@@ -36,6 +40,7 @@ TEST_CASE("Rang printing to standard output", "[terminal]")
 
 	SECTION("output is to terminal")
 	{
+		std::cout << rang::control::forceColor;
 
 		std::cout << rang::fg::green << s << "std::cout" << rang::style::reset
 		          << std::endl;
@@ -53,7 +58,7 @@ TEST_CASE("Rang printing to non-terminals (force color)", "[file]")
 {
 	SECTION("output is to a file (force color)")
 	{
-		std::cout << rang::fg::blue << "to terminal" << rang::style::reset;
+		std::cout << rang::control::forceColor << rang::fg::blue << "to terminal" << rang::style::reset;
 
 		std::ofstream out("out.txt");
 		std::streambuf *coutbuf = std::cout.rdbuf();
@@ -67,6 +72,7 @@ TEST_CASE("Rang printing to non-terminals (force color)", "[file]")
 
 		std::ifstream in("out.txt");
 		std::string output1,output2;
+		std::cout << rang::control::forceColor;
 		std::getline(in, output1);
 		std::cout << " == " << output1 << "(force color)";
 		std::getline(in, output2);
