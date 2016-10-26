@@ -59,19 +59,19 @@ TEST_CASE("Rang printing to non-terminals (force color)", "[file]")
 		std::streambuf *coutbuf = std::cout.rdbuf();
 		std::cout.rdbuf(out.rdbuf());
 
-		std::cout << rang::control::forceColor << rang::fg::blue << "to file (force color)" << rang::style::reset << std::endl;
-		std::cout << rang::control::autoColor << rang::fg::blue << "to file (don't force color)" << rang::style::reset;
+		std::cout << rang::control::forceColor << rang::fg::blue << "to file " << rang::style::reset << std::endl;
+		std::cout << rang::control::autoColor << rang::fg::blue << "to file " << rang::style::reset;
 
 		std::cout.rdbuf(coutbuf);
 		out.close();
 
 		std::ifstream in("out.txt");
-		std::string output;
-		std::getline(in, output);
-		std::cout << " == " << output;
-		std::getline(in, output);
-		std::cout << " != " << output << std::endl;
+		std::string output1,output2;
+		std::getline(in, output1);
+		std::cout << " == " << output1 << "(force color)";
+		std::getline(in, output2);
+		std::cout << " != " << output2 << "(don't force color)" << std::endl;
 
-		REQUIRE(1 == 1);
+		REQUIRE(output1 != output2);
 	}
 }
