@@ -233,7 +233,7 @@ namespace rang {
 		inline enableStd<T> setColor(std::ostream &os, T const value)
 		{
 			HANDLE h = getConsoleHandle();
-			if (h)
+			if (h&&isTerminal(os.rdbuf()))
 			{
 				setWinAttribute(value, current_state());
 				SetConsoleTextAttribute(h, current_state());
