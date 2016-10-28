@@ -6,7 +6,8 @@
 #include <string>
 
 /*
-The rang::control::forceColor is used to write to terminal here in order to work with appveyor
+The rang::control::forceColor is used to write to terminal here in order to work
+with appveyor terminal
 */
 
 TEST_CASE("Rang printing to non-terminals", "[file]")
@@ -58,20 +59,23 @@ TEST_CASE("Rang printing to non-terminals (force color)", "[file]")
 {
 	SECTION("output is to a file (force color)")
 	{
-		std::cout << rang::control::forceColor << rang::fg::blue << "to terminal" << rang::style::reset;
+		std::cout << rang::control::forceColor << rang::fg::blue
+		          << "to terminal" << rang::style::reset;
 
 		std::ofstream out("out.txt");
 		std::streambuf *coutbuf = std::cout.rdbuf();
 		std::cout.rdbuf(out.rdbuf());
 
-		std::cout << rang::control::forceColor << rang::fg::blue << "to file " << rang::style::reset << std::endl;
-		std::cout << rang::control::autoColor << rang::fg::blue << "to file " << rang::style::reset;
+		std::cout << rang::control::forceColor << rang::fg::blue << "to file "
+		          << rang::style::reset << std::endl;
+		std::cout << rang::control::autoColor << rang::fg::blue << "to file "
+		          << rang::style::reset;
 
 		std::cout.rdbuf(coutbuf);
 		out.close();
 
 		std::ifstream in("out.txt");
-		std::string output1,output2;
+		std::string output1, output2;
 		std::cout << rang::control::forceColor;
 		std::getline(in, output1);
 		std::cout << " == " << output1 << "(force color)";
