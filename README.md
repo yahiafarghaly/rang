@@ -21,6 +21,3 @@
 - Place this code inside your primary `meson.build` - `rang_dep = dependency('rang', fallback : ['rang', 'rang_dep'])`
 - Make sure to include `rang_dep` as dependency wherever you need it.
 
-------
-##TODO
-- [ ] support Windows versions < 10
