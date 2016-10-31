@@ -17,13 +17,7 @@
 4. Profit!!
 
 #### Using Meson build system
-- Make a `rang.wrap` file inside your `subprojects/` directory with following content - 
-```
-[rang-git]
-directory=rang
-url=https://github.com/agauniyal/rang.git
-revision=head
-```
+- Use wrapdb to find rang dependency
 - Place this code inside your primary `meson.build` - `rang_dep = dependency('rang', fallback : ['rang', 'rang_dep'])`
 - Make sure to include `rang_dep` as dependency wherever you need it.
 
