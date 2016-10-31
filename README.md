@@ -1,7 +1,4 @@
-# rang 
-[![Build Status](https://travis-ci.org/agauniyal/rang.svg?branch=master)](https://travis-ci.org/agauniyal/rang) 
-[![Coverage Status](https://coveralls.io/repos/github/agauniyal/rang/badge.svg?branch=master)](https://coveralls.io/github/agauniyal/rang?branch=master)
-[![Build status](https://ci.appveyor.com/api/projects/status/jqpdoelli38h2a7w?svg=true)](https://ci.appveyor.com/project/agauniyal/rang)
+# rang [![Build Status](https://travis-ci.org/agauniyal/rang.svg?branch=master)](https://travis-ci.org/agauniyal/rang) [![Build status](https://ci.appveyor.com/api/projects/status/jqpdoelli38h2a7w?svg=true)](https://ci.appveyor.com/project/agauniyal/rang) [![Coverage Status](https://coveralls.io/repos/github/agauniyal/rang/badge.svg?branch=master)](https://coveralls.io/github/agauniyal/rang?branch=master)
 
 #####Colors for your Terminal.
 
@@ -20,4 +17,3 @@
 - Use wrapdb to find rang dependency
 - Place this code inside your primary `meson.build` - `rang_dep = dependency('rang', fallback : ['rang', 'rang_dep'])`
 - Make sure to include `rang_dep` as dependency wherever you need it.
-

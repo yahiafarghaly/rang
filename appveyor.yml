@@ -1,4 +1,4 @@
-version: 0.1.{build}
+version: 2.0.{build}
 
 skip_tags: true
 
@@ -24,5 +24,6 @@ test_script:
   - cmd: cd build\bin\Debug
   - cmd: runTest.exe
   - cmd: vTest.exe
+  - cmd: allColors.exe
 
 deploy: off
