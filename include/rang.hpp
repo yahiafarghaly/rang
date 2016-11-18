@@ -14,7 +14,9 @@
 #if defined(OS_LINUX) || defined(OS_MAC)
 #include <unistd.h>
 #elif defined(OS_WIN)
+#define _CRT_SECURE_NO_WARNINGS
 #include <io.h>
+#include <Windows.h>
 #endif
 
 #include <algorithm>
@@ -32,6 +34,7 @@ namespace {
 }
 
 enum class style {
+#if defined(OS_LINUX) || defined(OS_MAC)
 	reset     = 0,
 	bold      = 1,
 	dim       = 2,
@@ -41,9 +44,13 @@ enum class style {
 	reversed  = 6,
 	conceal   = 7,
 	crossed   = 8
+#elif defined(OS_WIN)
+	reset	  = 255		//Different value to remove the collision of comparsion between the color code 0 with the <Value T> in << overload operator
+#endif
 };
 
 enum class fg {
+#if defined(OS_LINUX) || defined(OS_MAC)
 	black   = 30,
 	red     = 31,
 	green   = 32,
@@ -52,6 +59,17 @@ enum class fg {
 	magenta = 35,
 	cyan    = 36,
 	gray    = 37
+#elif defined(OS_WIN)
+	black	= 0,
+	blue	= 1,
+	green	= 2,
+	cyan	= 3,
+	red		= 4,
+	magenta = 5,
+	yellow	= 6,
+	white	= 7,
+	gray	= 8
+#endif
 };
 
 enum class bg {
@@ -87,6 +105,17 @@ enum class bgB {
 	gray    = 107
 };
 
+#if defined(OS_WIN)
+struct windowsConsoleInfo
+{
+	HANDLE hstdout;
+	CONSOLE_SCREEN_BUFFER_INFO csbi;
+};
+
+static windowsConsoleInfo wci;
+
+#endif
+
 inline bool supportsColor()
 {
 
@@ -107,12 +136,16 @@ inline bool supportsColor()
 		[&](std::string term) {
 			return env_string.find(term) != std::string::npos;
 		});
+	return result;
 
 #elif defined(OS_WIN)
-	static const bool result = true;
+	const char *env_p = std::getenv("COMSPEC"); //cmd path
+	if (env_p == nullptr) {
+		return false;
+	}
+	else
+		return true;
 #endif
-
-	return result;
 }
 
 inline bool isTerminal(const std::streambuf *osbuf)
@@ -135,6 +168,19 @@ inline bool isTerminal(const std::streambuf *osbuf)
 	return false;
 }
 
+#if defined(OS_WIN)
+//Must be called before using rang
+inline void rangWindowsConsoleInit()
+{
+	wci.hstdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	// Remember the initial settings for current console
+	GetConsoleScreenBufferInfo(wci.hstdout, &(wci.csbi));
+}
+static inline void rangWindowsConsoleReset()
+{
+	SetConsoleTextAttribute(wci.hstdout, wci.csbi.wAttributes);
+}
+#endif
 
 template <typename T>
 using enable = typename std::enable_if
@@ -151,9 +197,23 @@ template <typename T>
 inline enable<T> operator<<(std::ostream &os, T const value)
 {
 	std::streambuf const *osbuf = os.rdbuf();
+#if defined(OS_LINUX) || defined(OS_MAC)
 	return ((supportsColor()) && (isTerminal(osbuf)))
 	  ? os << "\033[" << static_cast<int>(value) << "m"
 	  : os;
+#elif defined(OS_WIN)
+	int value_i = static_cast<int>(value);
+	if ((supportsColor()) && (isTerminal(osbuf)))
+	{
+		if (value_i == static_cast<int>(rang::style::reset))
+			rangWindowsConsoleReset();
+		else
+			SetConsoleTextAttribute(wci.hstdout, value_i);
+		return os;
+	}
+	else
+		return os;
+#endif
 }
 }
 

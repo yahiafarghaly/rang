@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.8)
 project (rang)
-
+if (UNIX)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(CheckCXXCompilerFlag)
@@ -38,3 +38,10 @@ add_executable(vTest ${PROJECT_SOURCE_DIR}/test/visualTest.cpp)
 add_executable(runTest ${PROJECT_SOURCE_DIR}/test/test.cpp ${CATCH_HEADER_PATH})
 
 add_test(RTEST ${CMAKE_BINARY_DIR}/bin/runTest)
+endif()
+
+if (MSVC)
+	SET(EXECUTABLE_OUTPUT_PATH "../bin")
+    SET(SRC_FOLDER src)
+FILE(GLOB_RECURSE SRC_FILES "${SRC_FOLDER}/*.cpp")
+endif (MSVC)
